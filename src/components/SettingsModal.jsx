@@ -18,7 +18,7 @@ export default function SettingsModal({ syncConfig, saveConfig, onClose }) {
       display: 'flex', justifyContent: 'center', alignItems: 'center',
       zIndex: 1000
     }} className="animate-fade-in">
-      <div className="glass-panel" style={{ width: '450px', padding: '30px', position: 'relative' }}>
+      <div className="glass-panel" style={{ width: '90%', maxWidth: '450px', padding: '30px', position: 'relative' }}>
         <button onClick={onClose} style={{ position: 'absolute', top: '15px', right: '15px', color: 'var(--text-main)' }}>
           <X size={20} />
         </button>

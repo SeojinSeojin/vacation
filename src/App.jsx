@@ -53,8 +53,8 @@ export default function App() {
 
       <main style={{
         width: '100%', maxWidth: '1200px',
-        display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '30px',
-        height: 'calc(100vh - 150px)', minHeight: '600px'
+        display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '30px',
+        minHeight: 'calc(100vh - 150px)'
       }}>
         <TodoList 
           todos={todos} 

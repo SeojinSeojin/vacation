@@ -55,7 +55,7 @@ export default function TodoList({ todos, saveTodos, setHoveredDate, selectedDat
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '30px', display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
+    <div className="glass-panel" style={{ padding: '30px', display: 'flex', flexDirection: 'column', height: '100%', minHeight: '500px', overflow: 'hidden' }}>
       <h2 className="title text-gradient" style={{ fontSize: '2.5rem', marginBottom: '20px' }}>Bucket List</h2>
       
       {selectedDate && (
@@ -64,21 +64,22 @@ export default function TodoList({ todos, saveTodos, setHoveredDate, selectedDat
         </div>
       )}
 
-      <form onSubmit={handleAdd} style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
+      <form onSubmit={handleAdd} style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '30px' }}>
         <input 
           type="text" 
           value={newTitle} 
           onChange={e => setNewTitle(e.target.value)} 
           placeholder="What do you want to do?"
-          style={{ flex: 1, padding: '15px', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--panel-border)', color: 'var(--text-light)', fontSize: '1rem' }}
+          style={{ flex: '1 1 200px', padding: '15px', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--panel-border)', color: 'var(--text-light)', fontSize: '1rem' }}
         />
         <input 
           type="date" 
           value={newDate} 
           onChange={e => setNewDate(e.target.value)}
-          style={{ padding: '15px', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--panel-border)', color: 'var(--text-light)', fontSize: '1rem' }}
+          style={{ flex: '1 1 140px', padding: '15px', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--panel-border)', color: 'var(--text-light)', fontSize: '1rem' }}
         />
         <button type="submit" style={{ 
+          flex: '0 0 auto',
           background: 'var(--primary)', color: '#fff', padding: '0 25px', borderRadius: '12px',
           display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--primary-glow)',
           transition: 'all 0.2s', cursor: 'pointer'
