@@ -19,7 +19,7 @@ export default function App() {
   return (
     <div style={{ minHeight: '100vh', padding: '40px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', zIndex: 1 }}>
       <header style={{ width: '100%', maxWidth: '1200px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-        <h1 className="title text-gradient" style={{ fontSize: '1.8rem', letterSpacing: '2px', textTransform: 'uppercase' }}>Vacation Sync</h1>
+        <h1 className="title text-gradient" style={{ fontSize: '2rem', letterSpacing: '2px', textTransform: 'uppercase' }}>Wanderlist</h1>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-main)', fontSize: '0.9rem', background: 'rgba(255,255,255,0.05)', padding: '8px 15px', borderRadius: '20px' }}>
