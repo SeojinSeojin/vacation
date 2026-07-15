@@ -14,9 +14,16 @@ export default function TodoList({ todos, saveTodos, setHoveredDate, selectedDat
     : todos;
 
   const sortedTodos = [...filteredTodos].sort((a, b) => {
+    // 1. Completed items go to the bottom
+    if (a.completed && !b.completed) return 1;
+    if (!a.completed && b.completed) return -1;
+
+    // 2. Unscheduled items go to the bottom
     if (!a.date && !b.date) return 0;
     if (!a.date) return 1; // Unscheduled at the bottom
     if (!b.date) return -1;
+    
+    // 3. Otherwise sort by date
     return new Date(a.date) - new Date(b.date);
   });
 
