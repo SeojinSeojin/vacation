@@ -1,9 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-const defaultTodos = [
-  { id: '1', title: 'Skydiving in Hawaii', date: new Date(new Date().setDate(new Date().getDate() + 5)).toISOString().split('T')[0], completed: false },
-  { id: '2', title: 'Learn to Surf', date: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0], completed: false }
-];
+const defaultTodos = [];
 
 export function useCloudSync() {
   const [todos, setTodos] = useState(defaultTodos);
@@ -22,12 +19,15 @@ export function useCloudSync() {
   };
 
   const fetchTodos = useCallback(async () => {
-    if (!syncConfig.binId || !syncConfig.apiKey) return;
+    const binId = syncConfig.binId?.trim();
+    const apiKey = syncConfig.apiKey?.trim();
+    
+    if (!binId || !apiKey) return;
     setStatus('loading');
     try {
-      const response = await fetch(`https://api.jsonbin.io/v3/b/${syncConfig.binId}/latest`, {
+      const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
         headers: {
-          'X-Master-Key': syncConfig.apiKey
+          'X-Master-Key': apiKey
         }
       });
       if (!response.ok) throw new Error('Failed to fetch from JSONBin');
@@ -50,15 +50,18 @@ export function useCloudSync() {
   const saveTodos = async (newTodos) => {
     setTodos(newTodos); // Optimistic update
     
-    if (!syncConfig.apiKey || !syncConfig.binId) return;
+    const binId = syncConfig.binId?.trim();
+    const apiKey = syncConfig.apiKey?.trim();
+    
+    if (!apiKey || !binId) return;
     
     setStatus('saving');
     try {
-      const response = await fetch(`https://api.jsonbin.io/v3/b/${syncConfig.binId}`, {
+      const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'X-Master-Key': syncConfig.apiKey
+          'X-Master-Key': apiKey
         },
         body: JSON.stringify({ todos: newTodos })
       });
