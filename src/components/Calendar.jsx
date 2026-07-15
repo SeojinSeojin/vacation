@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, addMonths, subMonths, getDay } from 'date-fns';
 
-export default function Calendar({ todos, hoveredDate, selectedDate, setSelectedDate }) {
+export default function Calendar({ todos, hoveredDate, selectedDate, setSelectedDate, assignDateToTodo }) {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [dragHoveredDate, setDragHoveredDate] = useState(null);
 
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(monthStart);
@@ -81,17 +82,30 @@ export default function Calendar({ todos, hoveredDate, selectedDate, setSelected
             <div 
               key={i} 
               onClick={() => handleDateClick(day)}
+              onDragOver={(e) => {
+                e.preventDefault();
+                setDragHoveredDate(format(day, 'yyyy-MM-dd'));
+              }}
+              onDragLeave={() => setDragHoveredDate(null)}
+              onDrop={(e) => {
+                e.preventDefault();
+                setDragHoveredDate(null);
+                const todoId = e.dataTransfer.getData('todoId');
+                if (todoId) {
+                  assignDateToTodo(todoId, format(day, 'yyyy-MM-dd'));
+                }
+              }}
               style={{
                 aspectRatio: '1',
                 display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
                 borderRadius: '14px', cursor: 'pointer', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                background: selected ? 'rgba(0, 240, 255, 0.15)' : (hovered ? 'rgba(123, 97, 255, 0.4)' : 'rgba(255,255,255,0.03)'),
-                border: selected ? '1px solid var(--accent)' : (hovered ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.05)'),
-                boxShadow: hovered ? 'var(--primary-glow)' : (selected ? 'var(--accent-glow)' : 'none'),
-                transform: hovered ? 'scale(1.1) translateY(-2px)' : (selected ? 'scale(1.05)' : 'scale(1)'),
-                color: selected || hovered || active ? 'var(--text-light)' : 'var(--text-main)',
+                background: (dragHoveredDate === format(day, 'yyyy-MM-dd') || selected) ? 'rgba(0, 240, 255, 0.15)' : (hovered ? 'rgba(123, 97, 255, 0.4)' : 'rgba(255,255,255,0.03)'),
+                border: (dragHoveredDate === format(day, 'yyyy-MM-dd') || selected) ? '1px solid var(--accent)' : (hovered ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.05)'),
+                boxShadow: (dragHoveredDate === format(day, 'yyyy-MM-dd') || hovered) ? 'var(--primary-glow)' : (selected ? 'var(--accent-glow)' : 'none'),
+                transform: (dragHoveredDate === format(day, 'yyyy-MM-dd') || hovered) ? 'scale(1.1) translateY(-2px)' : (selected ? 'scale(1.05)' : 'scale(1)'),
+                color: selected || hovered || active || dragHoveredDate === format(day, 'yyyy-MM-dd') ? 'var(--text-light)' : 'var(--text-main)',
                 position: 'relative',
-                zIndex: hovered ? 10 : 1
+                zIndex: hovered || dragHoveredDate === format(day, 'yyyy-MM-dd') ? 10 : 1
               }}
               onMouseOver={e => {
                 if(!hovered && !selected) e.currentTarget.style.background = 'rgba(255,255,255,0.1)';

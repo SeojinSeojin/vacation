@@ -100,6 +100,10 @@ export default function TodoList({ todos, saveTodos, setHoveredDate, selectedDat
         {sortedTodos.map(todo => (
           <div 
             key={todo.id}
+            draggable={!todo.date}
+            onDragStart={(e) => {
+              if (!todo.date) e.dataTransfer.setData('todoId', todo.id);
+            }}
             onMouseEnter={() => todo.date && setHoveredDate(todo.date)}
             onMouseLeave={() => setHoveredDate(null)}
             className="animate-fade-in"
@@ -108,7 +112,8 @@ export default function TodoList({ todos, saveTodos, setHoveredDate, selectedDat
               background: 'rgba(255,255,255,0.03)', borderRadius: '15px',
               border: '1px solid rgba(255,255,255,0.05)', transition: 'all 0.3s ease',
               opacity: todo.completed ? 0.6 : 1,
-              transform: 'translateY(0)'
+              transform: 'translateY(0)',
+              cursor: !todo.date ? 'grab' : 'default'
             }}
             onMouseOver={e => {
               e.currentTarget.style.background = 'rgba(255,255,255,0.08)';

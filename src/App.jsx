@@ -11,6 +11,11 @@ export default function App() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showSettings, setShowSettings] = useState(!syncConfig.binId);
 
+  const assignDateToTodo = (todoId, newDate) => {
+    const updatedTodos = todos.map(t => t.id === todoId ? { ...t, date: newDate } : t);
+    saveTodos(updatedTodos);
+  };
+
   return (
     <div style={{ minHeight: '100vh', padding: '40px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', zIndex: 1 }}>
       <header style={{ width: '100%', maxWidth: '1200px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
@@ -62,6 +67,7 @@ export default function App() {
           hoveredDate={hoveredDate}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
+          assignDateToTodo={assignDateToTodo}
         />
       </main>
 
