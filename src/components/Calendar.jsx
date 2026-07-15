@@ -44,7 +44,7 @@ export default function Calendar({ todos, hoveredDate, selectedDate, setSelected
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '30px', display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div className="glass-panel" style={{ padding: '30px', display: 'flex', flexDirection: 'column', height: '100%', maxHeight: 'calc(100vh - 100px)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
         <h2 className="title" style={{ fontSize: '1.8rem', color: 'var(--text-light)' }}>
           {format(currentDate, dateFormat)}

@@ -62,7 +62,7 @@ export default function TodoList({ todos, saveTodos, setHoveredDate, selectedDat
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '30px', display: 'flex', flexDirection: 'column', height: '100%', minHeight: '500px', overflow: 'hidden' }}>
+    <div className="glass-panel" style={{ padding: '30px', display: 'flex', flexDirection: 'column', height: '100%', maxHeight: 'calc(100vh - 100px)', minHeight: '500px', overflow: 'hidden' }}>
       <h2 className="title text-gradient" style={{ fontSize: '2.5rem', marginBottom: '20px' }}>Bucket List</h2>
       
       {selectedDate && (
